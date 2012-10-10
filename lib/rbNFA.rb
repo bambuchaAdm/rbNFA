@@ -1,5 +1,9 @@
 require "rbNFA/version"
 
 module RbNFA
-  # Your code goes here...
+  class Regexp
+    def initialize(string)
+      
+    end
+  end
 end
