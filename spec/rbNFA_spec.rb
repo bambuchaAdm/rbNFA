@@ -22,14 +22,16 @@ module RbNFA
 
   describe Lexer do
     let(:lexer){ Lexer.new }
-    
-    it "can lex a string into token stream" do
+        
+    it "on empty string don't generate tokens" do
       lexer.lex("").should have(0).tokens
     end
-    
-    it "on empty string don't generate tokens"
 
-    it "on literal chracter generate literal token"
+    it "on literal chracter generate literal token" do 
+      result = lexer.lex("a")
+      result.should have(1).token
+      result[0].should be_kind_of LiteralToken
+    end
 
     it "on plus generate one or more token"
 
