@@ -58,7 +58,11 @@ module RbNFA
       result.first.should be BeginGroupToken
     end
 
-    it "on right parenthiesie generate end group token"
+    it "on right parenthiesie generate end group token" do
+      result = lexer.lex(")")
+      result.should have(1).token
+      result.first.should be EndGroupToken
+    end
 
   end
 end
