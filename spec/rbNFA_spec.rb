@@ -39,7 +39,12 @@ module RbNFA
       result.first.should be OneOrMoreToken
     end
 
-    it "on star generate zero or more token"
+    it "on star generate zero or more token" do
+      result = lexer.lex("*")
+      result.should have(1).token
+      result.first.should be ZeroOrMoreToken
+    end
+      
 
     it "on question mark generate zero or one token"
 
