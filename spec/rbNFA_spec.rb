@@ -64,6 +64,11 @@ module RbNFA
       result.first.should be EndGroupToken
     end
 
+    it "on | create alterantion token" do
+      result = lexer.lex("|")
+      result.should have(1).token
+      result.first.should be AlternationToken
+    end
   end
 end
 
