@@ -5,6 +5,7 @@ Implementation of Thomson NFA regular expression algorithm.
 
 ** Supported systax
 
+*** =|= - alteration statemant 
 *** =?= - zero or one occurrence in matched text
 *** =+= - one or more occurrence in matched text
 *** =*= - zero or more occurrence in matched text
