@@ -6,4 +6,10 @@ module RbNFA
       
     end
   end
+
+  class Lexer
+    def lex(regexp)
+      return []
+    end
+  end
 end
