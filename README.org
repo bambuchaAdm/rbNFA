@@ -1,6 +1,14 @@
+
 * rbNFA
 
 Implementation of Thomson NFA regular expression algorithm.
+
+** Supported systax
+
+*** =?= - zero or one occurrence in matched text
+*** =+= - one or more occurrence in matched text
+*** =*= - zero or more occurrence in matched text
+*** =()= - grouping expression
 
 ** Usage
 
