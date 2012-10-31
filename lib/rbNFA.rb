@@ -29,7 +29,7 @@ module RbNFA
     end
     
     def self.cover(char)
-      (char == '+') ? true : false
+      return char == '+'
     end
 
     def self.create(char)
@@ -37,9 +37,22 @@ module RbNFA
     end
   end
 
+  class ZeroOrMoreToken
+    def initialize
+      raise "Use as class constant"
+    end
+    
+    def self.cover(char)
+      return char == "*"
+    end
+
+    def self.create(char)
+      self
+    end
+  end
 
   class Lexer
-    @@tokens = [ LiteralToken, OneOrMoreToken ]
+    @@tokens = [ LiteralToken, OneOrMoreToken, ZeroOrMoreToken]
 
     def lex(regexp)
       regexp.chars.map do |char|
