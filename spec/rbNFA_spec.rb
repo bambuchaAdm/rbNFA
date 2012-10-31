@@ -33,7 +33,11 @@ module RbNFA
       result[0].should be_kind_of LiteralToken
     end
 
-    it "on plus generate one or more token"
+    it "on plus generate one or more token" do 
+      result = lexer.lex("+")
+      result.should have(1).token
+      result.first.should be OneOrMoreToken
+    end
 
     it "on star generate zero or more token"
 

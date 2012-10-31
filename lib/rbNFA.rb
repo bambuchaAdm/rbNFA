@@ -9,7 +9,20 @@ module RbNFA
 
   class Lexer
     def lex(regexp)
-      return []
+      tokens = []
+      regexp.each_char do |char|
+        case char
+          when 'a'..'z' then tokens << LiteralToken.new(char)
+          when 'A'..'Z' then tokens << LiteralToken.new(char4)
+        end
+      end
+      tokens
+    end
+  end
+  class LiteralToken
+    attr_accessor :character
+    def initialize(character)
+      @character = character
     end
   end
 end
