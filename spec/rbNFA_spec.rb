@@ -46,7 +46,11 @@ module RbNFA
     end
       
 
-    it "on question mark generate zero or one token"
+    it "on question mark generate zero or one token" do
+      result = lexer.lex("?")
+      result.should have(1).token
+      result.first.should be ZeroOrOneToken
+    end
 
     it "on left parenthesie generate begin group token"
 
