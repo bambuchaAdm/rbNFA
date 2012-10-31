@@ -79,9 +79,23 @@ module RbNFA
     end
   end
 
+  class EndGroupToken
+    def initialize(char)
+      raise "Use as class constant"
+    end
+
+    def self.cover(char)
+      return char == ")"
+    end
+
+    def self.create(char)
+      self
+    end
+  end
+
   class Lexer
     @@tokens = [ LiteralToken, OneOrMoreToken, ZeroOrMoreToken, ZeroOrOneToken,
-                 BeginGroupToken]
+                 BeginGroupToken, EndGroupToken]
 
     def lex(regexp)
       regexp.chars.map do |char|
