@@ -134,6 +134,15 @@ module RbNFA
   end
 
   describe LiteralToken do
+    describe "::cover" do
+      it "return true on letter no mater case" do
+        letters = ('a'..'b').to_a + ('A'..'Z').to_a
+        letters.each do |letter|
+          LiteralToken.cover(letter).should be_true
+        end
+      end
+    end
+
     describe "#process" do
       let(:token){ LiteralToken.new('a') }
       let(:start){ Graph::Node.new() }
