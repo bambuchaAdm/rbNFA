@@ -191,6 +191,16 @@ module RbNFA
       end
     end
   end
+
+  describe Graph::LiteralNode do
+    describe "::enter?" do
+      let(:node){ Graph::LiteralNode.new('a') }
+      it "return true if arguments is equal to carried letter" do
+        node.enter?('a').should be_true
+        node.enter?('b').should be_false
+      end
+    end
+  end
 end
 
 

@@ -140,7 +140,7 @@ module RbNFA
         @next << node unless @next.include?(node)
       end
 
-      def enter(char)
+      def enter?(char)
         true
       end
     end
@@ -150,7 +150,7 @@ module RbNFA
         super()
         @char = char
       end
-      def enter(char)
+      def enter?(char)
         @char == char
       end
     end
