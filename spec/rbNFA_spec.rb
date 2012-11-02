@@ -201,6 +201,14 @@ module RbNFA
       end
     end
   end
+
+  describe Graph::Node do
+    describe "::enter?" do
+      it "return true evry time" do
+        Graph::Node.new.enter?('').should be_true
+      end
+    end
+  end
 end
 
 
