@@ -150,11 +150,18 @@ module RbNFA
         current = start
         start,current,stop = token.process(start,current,stop)
         current.should_not be start
+        current.should be_kind_of LiteralNode
       end
     end
   end
   
   describe AlternationToken do
+    describe "::cover" do
+      it "return true on |" do
+        AlternationToken.cover('|').should be_true
+      end
+    end
+
     describe "::process" do
       let(:token){ AlternationToken }
       let(:start){ Graph::Node.new() }
@@ -176,4 +183,5 @@ module RbNFA
     end
   end
 end
+
 
