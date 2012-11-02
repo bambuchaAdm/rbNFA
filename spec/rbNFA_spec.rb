@@ -156,11 +156,23 @@ module RbNFA
   
   describe AlternationToken do
     describe "::process" do
+      let(:token){ AlternationToken }
       let(:start){ Graph::Node.new() }
+      let(:current) { Graph::Node.new() }
       let(:stop){ Graph::Node.new() }
-      it "connect old current to end"
+      
+      before :each do 
+        start.connect(current)
+        @start,@current,@stop = token.process(start,current,stop)
+      end
 
-      it "change new current to start"
+      it "connect old current to end" do
+        current.should include(stop)
+      end
+      
+      it "change new current to start" do 
+        @current.should be start
+      end
     end
   end
 end
