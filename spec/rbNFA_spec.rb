@@ -159,7 +159,7 @@ module RbNFA
         current = start
         start,current,stop = token.process(start,current,stop)
         current.should_not be start
-        current.should be_kind_of LiteralNode
+        current.should be_kind_of Graph::LiteralNode
       end
     end
   end

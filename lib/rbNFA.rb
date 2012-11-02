@@ -139,6 +139,19 @@ module RbNFA
       def connect(node)
         @next << node unless @next.include?(node)
       end
+
+      def enter(char)
+        true
+      end
+    end
+
+    class LiteralNode < Node
+      def initialize(char)
+        @char = char
+      end
+      def enter(char)
+        @char == char
+      end
     end
 
     attr_reader :begin, :end
