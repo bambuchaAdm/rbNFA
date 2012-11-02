@@ -209,6 +209,18 @@ module RbNFA
       end
     end
   end
+
+  describe Matcher do
+    it "take graph at building" do
+      Matcher.new(Graph.new).should_not be_nil
+    end
+    
+    it "return true on match empty grap"
+
+    it "return true on match 'a' on 'a' string"
+
+    it "return false on match 'a' on 'b' string"
+  end
 end
 
 

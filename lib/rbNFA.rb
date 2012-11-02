@@ -179,4 +179,8 @@ module RbNFA
       return @graph
     end
   end
+
+  class Matcher
+
+  end
 end
