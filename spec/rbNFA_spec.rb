@@ -242,6 +242,30 @@ module RbNFA
       end
     end
   end
+
+  describe ZeroOrOneToken do
+    describe "::process" do
+      let(:token){ ZeroOrOneToken }
+      let(:start){ Graph::Node.new }
+      let(:prev){ Graph::Node.new }
+      let(:current) { n=  Graph::Node.new; prev.connect(n); n }
+      let(:stop) { Graph::Node.new }
+      
+      before :each do
+        @start,@current,@prev,@stop = ZeroOrOneToken.process(start,prev,current,stop)
+      end
+      
+      it "create new operation node" do
+        @current.should_not be current
+        @current.should_not be prev
+        @current.should have(0).next
+      end
+
+      it "add erge from prev to operation node" do
+        @prev.should include(@current)
+      end
+    end
+  end
 end
 
 
