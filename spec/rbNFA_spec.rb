@@ -110,10 +110,15 @@ module RbNFA
 
 
         describe "node" do
-
-          it "with letter"
-
-          it "with edge avoid him when encounter zero of one token"
+          it "with edge avoid him when encounter zero of one token" do
+            # /ab?/
+            graph = parser.parse([LiteralToken.new('a'),LiteralToken.new('b'),ZeroOrOneToken])
+            a = graph.begin.next.first
+            a.should have(2).next
+            b = a.next.select{ |node| node.kind_of?(Graph::LiteralNode) }.first
+            b.should have(1).next
+            b.next.first.should be graph.end
+          end
 
           it "with loop on him when encoutner one or more token"
 
