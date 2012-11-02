@@ -117,4 +117,8 @@ module RbNFA
       end
     end
   end
+
+  class Parser
+
+  end
 end

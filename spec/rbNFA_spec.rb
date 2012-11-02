@@ -70,5 +70,39 @@ module RbNFA
       result.first.should be AlternationToken
     end
   end
+
+  describe Parser do
+    let(:parser){ Parser.new }
+
+    describe "#parse" do
+      let(:parse) { parser.parse }
+
+      describe "build" do
+        it "empty grapth form empty token stream"
+
+        it "two alternation path"
+
+        describe "node" do
+
+          it "with letter"
+
+          it "with edge avoid him when encounter zero of one token"
+
+          it "with loop on him when encoutner one or more token"
+
+          it "with loop and edge avoid him when encounter zero or more token"
+
+        end
+
+      end
+
+
+      describe "raise an error when" do
+        it "end token doesn't appear"
+        it "too much end tokens in stream"
+        it "target of operator is not specified"
+      end
+    end
+  end
 end
 
