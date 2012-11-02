@@ -23,7 +23,7 @@ module RbNFA
     end
 
     def process(start,current,stop)
-      node = Graph::Node.new
+      node = Graph::LiteralNode.new(character)
       current.connect(node)
       return start,node,stop
     end
@@ -147,6 +147,7 @@ module RbNFA
 
     class LiteralNode < Node
       def initialize(char)
+        super()
         @char = char
       end
       def enter(char)
