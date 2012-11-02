@@ -150,8 +150,12 @@ module RbNFA
       let(:token){ LiteralToken.new('a') }
       let(:start){ Graph::Node.new() }
       let(:stop){ Graph::Node.new() }
+
+      before :each do 
+        @start,@current,@prev,@stop = token.process(start,start,nil,stop)
+      end
+
       it "create new node and add to current" do
-        @start,@current,@stop = token.process(start,start,stop)
         @start.should be start
         @stop.should be stop
         @start.should have(1).next
@@ -159,10 +163,8 @@ module RbNFA
       end
 
       it "change current to created node" do
-        current = start
-        start,current,stop = token.process(start,current,stop)
-        current.should_not be start
-        current.should be_kind_of Graph::LiteralNode
+        @current.should_not be start
+        @current.should be_kind_of Graph::LiteralNode
       end
     end
   end
@@ -182,7 +184,7 @@ module RbNFA
       
       before :each do 
         start.connect(current)
-        @start,@current,@stop = token.process(start,current,stop)
+        @start,@current,@prev,@stop = token.process(start,current,nil,stop)
       end
 
       it "connect old current to end" do

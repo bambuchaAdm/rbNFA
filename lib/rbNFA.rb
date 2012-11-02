@@ -28,10 +28,10 @@ module RbNFA
       self.new(char)
     end
 
-    def process(start,current,stop)
+    def process(start,current,prev,stop)
       node = Graph::LiteralNode.new(character)
       current.connect(node)
-      return start,node,stop
+      return start,node,current,stop
     end
   end
 
@@ -74,6 +74,10 @@ module RbNFA
 
     def self.create(char)
       return self
+    end
+
+    def self.process(start,current,prev,stop)
+      return 
     end
   end
 
@@ -118,9 +122,9 @@ module RbNFA
       self
     end
 
-    def self.process(start,current,stop)
+    def self.process(start,current,prev,stop)
       current.connect(stop)
-      return start,start,stop
+      return start,start,current,stop
     end
   end
 
@@ -178,8 +182,9 @@ module RbNFA
     
     def parse(stream)
       @current = @begin
+      @prev = nil
       stream.each do |token|
-        @begin,@current,@end = token.process(@begin,@current,@end)
+        @begin,@current,@prev,@end = token.process(@begin,@current,@prev,@end)
       end
       @current.connect(@graph.end)
       return @graph
