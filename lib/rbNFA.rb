@@ -21,6 +21,12 @@ module RbNFA
     def self.create(char)
       self.new(char)
     end
+
+    def process(start,current,stop)
+      node = Graph::Node.new
+      current.connect(node)
+      return start,node,stop
+    end
   end
 
   class OneOrMoreToken
@@ -118,7 +124,40 @@ module RbNFA
     end
   end
 
-  class Parser
+  class Graph
+    class Node
+      attr_reader :next
+      def initialize
+        @next = []
+      end
 
+      def connect(node)
+        @next << node unless @next.include?(node)
+      end
+    end
+
+    attr_reader :begin, :end
+
+    def initialize
+      @begin = Node.new
+      @end = Node.new
+    end
+  end
+
+  class Parser
+    def initialize
+      @graph = Graph.new
+      @begin = @graph.begin
+      @end = @graph.end
+    end
+    
+    def parse(stream)
+      @current = @begin
+      stream.each do |token|
+        @begin,@current,@end = token.process(@begin,@current,@end)
+      end
+      @current.connect(@graph.end)
+      return @graph
+    end
   end
 end

@@ -75,12 +75,41 @@ module RbNFA
     let(:parser){ Parser.new }
 
     describe "#parse" do
-      let(:parse) { parser.parse }
-
       describe "build" do
-        it "empty grapth form empty token stream"
+        it "empty grapth form empty token stream" do
+          graph = parser.parse([])
+          graph.begin.should have(1).next
+          graph.begin.next.first.should be graph.end
+        end
 
-        it "two alternation path"
+        it "build simple graph form line literal tokens" do
+          graph = parser.parse([LiteralToken.new('a'),LiteralToken.new('b')])
+          graph.begin.should have(1).next
+
+          a = graph.begin.next.first # Next to begin is 'a'
+          a.should have(1).next
+
+          b = a.next.first # Next to 'a' is 'b'
+          b.should have(1).next 
+
+          b .next.first.should be graph.end # to end node 
+        end
+
+        it "two alternation path" do
+          graph = parser.parse([LiteralToken.new('a'), AlternationToken, LiteralToken.new('b')])
+          graph.begin.should have(2).next
+
+          left = graph.begin.next[0]
+          right = graph.begin.next[1]
+
+          left.should have(1).next
+          left.next.first.should be graph.end
+
+          right.should have(1).next
+          right.next.first.should be graph.end
+
+        end        
+
 
         describe "node" do
 
@@ -93,7 +122,6 @@ module RbNFA
           it "with loop and edge avoid him when encounter zero or more token"
 
         end
-
       end
 
 
@@ -102,6 +130,37 @@ module RbNFA
         it "too much end tokens in stream"
         it "target of operator is not specified"
       end
+    end
+  end
+
+  describe LiteralToken do
+    describe "#process" do
+      let(:token){ LiteralToken.new('a') }
+      let(:start){ Graph::Node.new() }
+      let(:stop){ Graph::Node.new() }
+      it "create new node and add to current" do
+        @start,@current,@stop = token.process(start,start,stop)
+        @start.should be start
+        @stop.should be stop
+        @start.should have(1).next
+        @start.next.first.should be @current
+      end
+
+      it "change current to created node" do
+        current = start
+        start,current,stop = token.process(start,current,stop)
+        current.should_not be start
+      end
+    end
+  end
+  
+  describe AlternationToken do
+    describe "::process" do
+      let(:start){ Graph::Node.new() }
+      let(:stop){ Graph::Node.new() }
+      it "connect old current to end"
+
+      it "change new current to start"
     end
   end
 end
