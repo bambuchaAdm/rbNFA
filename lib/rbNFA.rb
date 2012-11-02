@@ -181,6 +181,8 @@ module RbNFA
   end
 
   class Matcher
-
+    def initialize(graph)
+      @graph = graph
+    end
   end
 end
