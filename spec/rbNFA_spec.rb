@@ -167,7 +167,7 @@ module RbNFA
       end
 
       it "connect old current to end" do
-        current.should include(stop)
+        current.next.should include(stop)
       end
       
       it "change new current to start" do 

@@ -111,6 +111,11 @@ module RbNFA
     def self.create(char)
       self
     end
+
+    def self.process(start,current,stop)
+      current.connect(stop)
+      return start,start,stop
+    end
   end
 
   class Lexer
