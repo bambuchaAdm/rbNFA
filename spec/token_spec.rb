@@ -15,21 +15,22 @@ module RbNFA
       let(:token){ LiteralToken.new('a') }
       let(:start){ Graph::Node.new() }
       let(:stop){ Graph::Node.new() }
+      let(:path){ [start] }
 
       before :each do 
-        @start,@current,@prev,@stop = token.process(start,start,nil,stop)
+        @start,@path,@stop = token.process(start,path,stop)
       end
 
       it "create new node and add to current" do
         @start.should be start
         @stop.should be stop
         @start.should have(1).next
-        @start.next.first.should be @current
+        @start.next.first.should be @path.last
       end
 
       it "change current to created node" do
-        @current.should_not be start
-        @current.should be_kind_of Graph::LiteralNode
+        @path.last.should_not be start
+        @path.last.should be_kind_of Graph::LiteralNode
       end
     end
   end
@@ -43,21 +44,26 @@ module RbNFA
 
     describe "::process" do
       let(:token){ AlternationToken }
-      let(:start){ Graph::Node.new() }
-      let(:current) { Graph::Node.new() }
-      let(:stop){ Graph::Node.new() }
+      let(:start){ Graph::Node.new }
+      let(:path) { node = Graph::Node.new; start.connect(node);[start, node] }
+      let(:stop){ Graph::Node.new }
+
+      def current
+        path.last
+      end
       
       before :each do 
-        start.connect(current)
-        @start,@current,@prev,@stop = token.process(start,current,nil,stop)
+        start.connect(path.last)
+        @start,@path,@stop = token.process(start,path,stop)
       end
+
 
       it "connect old current to end" do
         current.next.should include(stop)
       end
       
       it "change new current to start" do 
-        @current.should be start
+        @path.should == [start]
       end
     end
   end
@@ -68,11 +74,11 @@ module RbNFA
       let(:token){ ZeroOrOneToken }
       let(:start){ Graph::Node.new }
       let(:prev){ Graph::Node.new }
-      let(:current) { n=  Graph::Node.new; prev.connect(n); n }
-      let(:stop) { Graph::Node.new }
-      
+      let(:current) { n=  Graph::Node.new(); prev.connect(n); n }
+      let(:stop) { Graph::Node.new() }
+
       before :each do
-        @start,@current,@prev,@stop = ZeroOrOneToken.process(start,prev,current,stop)
+        @start,@current,@prev,@stop = token.process(start,prev,current,stop)
       end
       
       it "create new operation node" do

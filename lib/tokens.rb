@@ -14,10 +14,11 @@ module RbNFA
       self.new(char)
     end
 
-    def process(start,current,prev,stop)
+    def process(start,path,stop)
       node = Graph::LiteralNode.new(character)
-      current.connect(node)
-      return start,node,current,stop
+      path.last.connect(node)
+      path.push(node)
+      return start,path,stop
     end
   end
 
@@ -108,9 +109,9 @@ module RbNFA
       self
     end
 
-    def self.process(start,current,prev,stop)
-      current.connect(stop)
-      return start,start,current,stop
+    def self.process(start,path,stop)
+      path.last.connect(stop)
+      return start,[start],stop
     end
   end
 end

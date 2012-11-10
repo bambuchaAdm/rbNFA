@@ -38,16 +38,19 @@ module RbNFA
       @graph = Graph.new
       @begin = @graph.begin
       @end = @graph.end
+      @path = [@begin]
     end
     
     def parse(stream)
-      @current = @begin
-      @prev = nil
       stream.each do |token|
-        @begin,@current,@prev,@end = token.process(@begin,@current,@prev,@end)
+        @begin,@path,@end = token.process(@begin,@path,@end)
       end
-      @current.connect(@graph.end)
+      current.connect(@graph.end)
       return @graph
+    end
+
+    def current
+      @path.last
     end
   end
 end
