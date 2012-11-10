@@ -107,6 +107,29 @@ module RbNFA
       end
     end
   end
+  
+  describe ZeroOrMoreToken do
+    describe "::process" do
+      let(:token){ ZeroOrMoreToken }
+      let(:start){ Graph::Node.new }
+      let(:node) { Graph::Node.new }
+      let(:path) { start.connect(node);[start, node]}
+      let(:stop) { Graph::Node.new }
+
+      before :each do
+        @start,@path,@stop = token.process(start,path,stop)
+      end
+      
+      it "should add functional node" do 
+        @path.last.should_not be node
+        @path.last.should be_kind_of Graph::Node
+      end
+
+      it "should add loop over last node" do
+        node.next.should include(node)
+      end
+    end
+  end
 end
 
 

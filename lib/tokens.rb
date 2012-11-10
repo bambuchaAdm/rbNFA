@@ -56,6 +56,15 @@ module RbNFA
     def self.create(char)
       self
     end
+
+    def self.process(start,path,stop)
+      node = Graph::Node.new
+      path.last.connect(node)
+      path.last.connect(path.last)
+      path[-2].connect(node)
+      path << node 
+      return start,path,stop
+    end
   end
 
   class ZeroOrOneToken

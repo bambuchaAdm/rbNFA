@@ -1,4 +1,8 @@
 module RbNFA
+
+  class ParseError < StandardError
+  end
+  
   class Graph
     class Node
       attr_reader :next
@@ -34,6 +38,8 @@ module RbNFA
   end
 
   class Parser
+    @@operation_tokens = [AlternationToken,ZeroOrOneToken,
+                          ZeroOrMoreToken,OneOrMoreToken]
     def initialize
       @graph = Graph.new
       @begin = @graph.begin
@@ -42,6 +48,15 @@ module RbNFA
     end
     
     def parse(stream)
+
+      if stream.count(BeginGroupToken) != stream.count(EndGroupToken)
+        raise ParseError
+      end
+
+      if @@operation_tokens.include?(stream.first)
+        raise ParseError
+      end
+     
       stream.each do |token|
         @begin,@path,@end = token.process(@begin,@path,@end)
       end

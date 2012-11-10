@@ -63,15 +63,28 @@ module RbNFA
             a.next.first.next.should include(graph.end)
           end
 
-          it "with loop and edge avoid him when encounter zero or more token"
-
+          it "with loop and edge avoid him when encounter zero or more token" do
+            graph = parser.parse([LiteralToken.new('a'),ZeroOrMoreToken])
+            graph.begin.should have(2).next
+            a = graph.begin.next.first
+            a.next.should include(a)
+            functional_node = a.next.first
+            functional_node.next.should == [graph.end]
+          end
         end
       end
 
       describe "raise an error when" do
-        it "end token doesn't appear"
-        it "too much end tokens in stream"
-        it "target of operator is not specified"
+        it "end token doesn't appear" do
+          lambda { parser.parse([BeginGroupToken]) }.should raise_error ParseError
+        end
+
+        it "too much end tokens in stream" do
+          lambda { parser.parse([EndGroupToken]) }.should raise_error ParseError
+        end
+        it "target of operator is not specified" do
+          lambda { parser.parse([OneOrMoreToken]) }.should raise_error ParseError
+        end
       end
     end
   end
