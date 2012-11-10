@@ -1,6 +1,6 @@
 
 * rbNFA
-[[[[https://secure.travis-ci.org/bambuchaAdm/rbNFA.png?branch%3Dmaster]]][Travis-status]]
+[[https://secure.travis-ci.org/bambuchaAdm/rbNFA.png?branch=master]]
 
 Implementation of Thomson NFA regular expression algorithm.
 
