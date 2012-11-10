@@ -1,6 +1,6 @@
 
 * rbNFA
-
+[[https://secure.travis-ci.org/bambuchaAdm/rbNFA.png?branch%3Dmaster][Travis status]]
 Implementation of Thomson NFA regular expression algorithm.
 
 ** Supported systax
