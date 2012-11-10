@@ -22,11 +22,7 @@ module RbNFA
     end
   end
 
-  class OneOrMoreToken
-    def initialize
-      raise "Use as class constant"
-    end
-    
+  module OneOrMoreToken
     def self.cover(char)
       return char == '+'
     end
@@ -44,11 +40,7 @@ module RbNFA
     end
   end
 
-  class ZeroOrMoreToken
-    def initialize
-      raise "Use as class constant"
-    end
-    
+  module ZeroOrMoreToken
     def self.cover(char)
       return char == "*"
     end
@@ -67,11 +59,7 @@ module RbNFA
     end
   end
 
-  class ZeroOrOneToken
-    def initialize
-      raise "Use as class constant"
-    end
-
+  module ZeroOrOneToken
     def self.cover(char)
       return char == "?"
     end
@@ -89,11 +77,7 @@ module RbNFA
     end
   end
 
-  class BeginGroupToken 
-    def initialize
-      raise "Use as class constant"
-    end
-
+  module BeginGroupToken 
     def self.cover(char)
       return char == "("
     end
@@ -103,11 +87,7 @@ module RbNFA
     end
   end
 
-  class EndGroupToken
-    def initialize(char)
-      raise "Use as class constant"
-    end
-
+  module EndGroupToken
     def self.cover(char)
       return char == ")"
     end
@@ -117,11 +97,7 @@ module RbNFA
     end
   end
 
-  class AlternationToken
-    def initialize(char)
-      raise "USe as class constant"
-    end
-
+  module AlternationToken
     def self.cover(char)
       return char == "|"
     end
