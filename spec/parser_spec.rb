@@ -26,7 +26,9 @@ module RbNFA
         end
 
         it "two alternation path" do
-          graph = parser.parse([LiteralToken.new('a'), AlternationToken, LiteralToken.new('b')])
+          graph = parser.parse([LiteralToken.new('a'), 
+                                AlternationToken,
+                                LiteralToken.new('b')])
           graph.begin.should have(2).next
 
           left = graph.begin.next[0]
@@ -44,15 +46,22 @@ module RbNFA
         describe "node" do
           it "with edge avoid him when encounter zero of one token" do
             # /ab?/
-            graph = parser.parse([LiteralToken.new('a'),LiteralToken.new('b'),ZeroOrOneToken])
-            a = graph.begin.next.first
-            a.should have(2).next
-            b = a.next.select{ |node| node.kind_of?(Graph::LiteralNode) }.first
+            graph = parser.parse([LiteralToken.new('b'),
+                                  ZeroOrOneToken])
+            graph.begin.should have(2).next
+            b = graph.begin.next.first
             b.should have(1).next
-            b.next.first.should be graph.end
+            function_node = b.next.first
+            function_node.next.should == [graph.end]
           end
 
-          it "with loop on him when encoutner one or more token"
+          it "with loop on him when encoutner one or more token" do
+            graph = parser.parse([LiteralToken.new('a'),OneOrMoreToken])
+            a = graph.begin.next.first
+            a.should have(2).next
+            a.next.should include(a)
+            a.next.first.next.should include(graph.end)
+          end
 
           it "with loop and edge avoid him when encounter zero or more token"
 

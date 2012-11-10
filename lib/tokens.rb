@@ -34,6 +34,14 @@ module RbNFA
     def self.create(char)
       self
     end
+    
+    def self.process(start,path,stop)
+      node = Graph::Node.new
+      path.last.connect(node)
+      path.last.connect(path.last)
+      path << node 
+      return start,path,stop
+    end
   end
 
   class ZeroOrMoreToken
@@ -63,8 +71,12 @@ module RbNFA
       return self
     end
 
-    def self.process(start,current,prev,stop)
-      return 
+    def self.process(start,path,stop)
+      node = Graph::Node.new
+      path.last.connect node
+      path[-2].connect(node)
+      path << node 
+      return start,path,stop
     end
   end
 

@@ -48,18 +48,13 @@ module RbNFA
       let(:path) { node = Graph::Node.new; start.connect(node);[start, node] }
       let(:stop){ Graph::Node.new }
 
-      def current
-        path.last
-      end
-      
       before :each do 
         start.connect(path.last)
         @start,@path,@stop = token.process(start,path,stop)
       end
 
-
       it "connect old current to end" do
-        current.next.should include(stop)
+        path.last.next.should include(stop)
       end
       
       it "change new current to start" do 
@@ -73,22 +68,42 @@ module RbNFA
     describe "::process" do
       let(:token){ ZeroOrOneToken }
       let(:start){ Graph::Node.new }
-      let(:prev){ Graph::Node.new }
-      let(:current) { n=  Graph::Node.new(); prev.connect(n); n }
-      let(:stop) { Graph::Node.new() }
+      let(:path) { node = Graph::Node.new; start.connect(node);[start, node]}
+      let(:stop) { Graph::Node.new }
 
       before :each do
-        @start,@current,@prev,@stop = token.process(start,prev,current,stop)
-      end
-      
-      it "create new operation node" do
-        @current.should_not be current
-        @current.should_not be prev
-        @current.should have(0).next
+        @start,@path,@stop = token.process(start,path,stop)
       end
 
+      it "add operation node as end of path" do
+        @path.last.should be_kind_of Graph::Node
+      end
+      
       it "add erge from prev to operation node" do
-        @prev.should include(@current)
+        (@path[-3]).next.should include(@path.last)
+      end
+    end
+  end
+
+  describe OneOrMoreToken do
+    describe "::process" do
+      let(:token){ OneOrMoreToken }
+      let(:start){ Graph::Node.new }
+      let(:node) { Graph::Node.new }
+      let(:path) { start.connect(node);[start, node]}
+      let(:stop) { Graph::Node.new }
+
+      before :each do
+        @start,@path,@stop = token.process(start,path,stop)
+      end
+
+      it "add functional node to graph" do
+        @path.last.should_not be node
+        node.next.should include(@path.last)
+      end
+
+      it "craete loop in process node" do
+        node.next.should include(node)
       end
     end
   end
