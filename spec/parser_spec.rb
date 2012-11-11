@@ -45,7 +45,7 @@ module RbNFA
 
         describe "node" do
           it "with edge avoid him when encounter zero of one token" do
-            # /ab?/
+            # /b?/
             graph = parser.parse([LiteralToken.new('b'),
                                   ZeroOrOneToken])
             graph.begin.should have(2).next
@@ -56,6 +56,7 @@ module RbNFA
           end
 
           it "with loop on him when encoutner one or more token" do
+            #/a+/
             graph = parser.parse([LiteralToken.new('a'),OneOrMoreToken])
             a = graph.begin.next.first
             a.should have(2).next
@@ -64,6 +65,7 @@ module RbNFA
           end
 
           it "with loop and edge avoid him when encounter zero or more token" do
+            #/a*/
             graph = parser.parse([LiteralToken.new('a'),ZeroOrMoreToken])
             graph.begin.should have(2).next
             a = graph.begin.next.first
@@ -72,6 +74,10 @@ module RbNFA
             functional_node.next.should == [graph.end]
           end
         end
+      end
+
+      it "don't reaise na error when regexp starts with alternation token" do
+        lambda{ parser.parse([AlternationToken,LiteralToken.new('a')])}.should_not raise_error
       end
 
       describe "raise an error when" do

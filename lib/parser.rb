@@ -38,8 +38,7 @@ module RbNFA
   end
 
   class Parser
-    @@operation_tokens = [AlternationToken,ZeroOrOneToken,
-                          ZeroOrMoreToken,OneOrMoreToken]
+    @@operation_tokens = [ZeroOrOneToken,ZeroOrMoreToken,OneOrMoreToken]
     def initialize
       @graph = Graph.new
       @begin = @graph.begin
