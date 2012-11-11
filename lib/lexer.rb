@@ -2,7 +2,7 @@ require 'tokens'
 
 module RbNFA
   class Lexer
-    @@tokens = [ OneOrMoreToken, ZeroOrMoreToken, ZeroOrOneToken,
+    @@TOKENS = [ OneOrMoreToken, ZeroOrMoreToken, ZeroOrOneToken,
                  BeginGroupToken, EndGroupToken, AlternationToken]
 
     def lex(regexp)
@@ -15,7 +15,7 @@ module RbNFA
           result << LiteralToken.new(regexp[index+1])
           skip = true
         else    
-          possible = @@tokens.select { |token| token.cover(char) }
+          possible = @@TOKENS.select { |token| token.cover(char) }
           if not possible.empty?
             result << possible.first.create(char)
           else
