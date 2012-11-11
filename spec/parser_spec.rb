@@ -43,7 +43,7 @@ module RbNFA
         end        
 
 
-        describe "node" do
+        context "node" do
           it "with edge avoid him when encounter zero of one token" do
             # /b?/
             graph = parser.parse([LiteralToken.new('b'),
