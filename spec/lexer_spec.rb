@@ -51,5 +51,13 @@ module RbNFA
       result.should have(1).token
       result.first.should be AlternationToken
     end
+
+    it 'on "ab+|cd*" procude equivalent token sequence' do
+      result = lexer.lex("ab+|cd*")
+      result.should == [LiteralToken.new('a'),LiteralToken.new('b'),
+                        OneOrMoreToken,AlternationToken,
+                        LiteralToken.new('c'),LiteralToken.new('d'),
+                        ZeroOrMoreToken]
+    end
   end
 end

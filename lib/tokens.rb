@@ -1,10 +1,5 @@
 module RbNFA
-  class LiteralToken
-    attr_accessor :character
-
-    def initialize(character)
-      @character = character
-    end
+  class LiteralToken < Struct.new(:character)
 
     def self.cover(char)
       ('a'..'z').include?(char) or ('A'..'Z').include?(char)
