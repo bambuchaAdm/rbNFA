@@ -18,5 +18,3 @@ module RbNFA
     end
   end
 end
-
-
