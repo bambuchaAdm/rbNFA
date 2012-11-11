@@ -10,6 +10,7 @@ Implementation of Thomson NFA regular expression algorithm.
 + =+= - one or more occurrence in matched text
 + =*= - zero or more occurrence in matched text
 + =()= - grouping expression
++ =\= - escape character (after that operation character treat as literal)
 
 ** Usage
 
