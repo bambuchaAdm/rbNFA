@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 
@@ -58,6 +59,14 @@ module RbNFA
                         OneOrMoreToken,AlternationToken,
                         LiteralToken.new('c'),LiteralToken.new('d'),
                         ZeroOrMoreToken]
+    end
+
+    it 'on escape sequence build literal token even if it is operation token' do
+      lexer.lex("\\+").should == [LiteralToken.new('+')]
+    end
+
+    it 'create literal token form non-asci character' do
+      lexer.lex("ó").should == [LiteralToken.new('ó')]
     end
   end
 end

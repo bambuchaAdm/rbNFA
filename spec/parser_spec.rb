@@ -56,7 +56,7 @@ module RbNFA
           end
 
           it "with loop on him when encoutner one or more token" do
-            #/a+/
+            # /a+/
             graph = parser.parse([LiteralToken.new('a'),OneOrMoreToken])
             a = graph.begin.next.first
             a.should have(2).next
@@ -65,7 +65,7 @@ module RbNFA
           end
 
           it "with loop and edge avoid him when encounter zero or more token" do
-            #/a*/
+            # /a*/
             graph = parser.parse([LiteralToken.new('a'),ZeroOrMoreToken])
             graph.begin.should have(2).next
             a = graph.begin.next.first
